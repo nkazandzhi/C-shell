@@ -13,3 +13,4 @@ fi
 DIR="$1"
 
 find "${DIR}" -xtype l
+ 
