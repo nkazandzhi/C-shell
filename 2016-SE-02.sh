@@ -28,4 +28,4 @@ while read USER; do
   fi
 done < "${USERS}"
 
-rm "${USERS}"
+rm "${USERS}" 
