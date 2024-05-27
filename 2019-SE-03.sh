@@ -19,7 +19,7 @@ while read line;do
 		continue
 	fi
 
-	if [ ! $(egrep "[[:alnum:]]{64} $line" helpFile) ];then #sega go dobavqme
+	if [ ! $(egrep "[[:alnum:]]{64} $line" helpFile) ];then #sega go dobavqme, tuk tr da proverqvame pak dali go ima imeto na file-a spored men, ako go nqma - dobavqme ako go ima sravnqvame stoinostine i gi zamenqme ako e nujno
 		echo "$(sha256sum $line)" >> helpFile
 	else
 		sed -i -r "S|^[[:alnum:]]{64} ${line}$|$(sha256sum $line|g)" helpFile #modificirano
