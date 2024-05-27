@@ -15,14 +15,14 @@ touch helpFile
 mkdir -p extracted
 
 while read line;do
-	if [ $(egrep $(sha256sum $line) helpFile) ];then 
+	if [ $(egrep $(sha256sum $line) helpFile) ];then #ako napulno suvpada reda, znachi nishto ne promenqme, ne dobavqme -> continue
 		continue
 	fi
 
-	if [ ! $(egrep "[[:alnum:]]{64} $line" helpFile) ];then
+	if [ ! $(egrep "[[:alnum:]]{64} $line" helpFile) ];then #sega go dobavqme
 		echo "$(sha256sum $line)" >> helpFile
 	else
-		sed -i -r "S|^[[:alnum:]]{64} ${line}$|$(sha256sum $line|g)" helpFile
+		sed -i -r "S|^[[:alnum:]]{64} ${line}$|$(sha256sum $line|g)" helpFile #modificirano
 	fi
 
 	if [ $(tar -tf $line | grep "meow.txt") ];then
