@@ -20,7 +20,7 @@ HELP_FILE=$(mktemp)
 egrep ",$2," "$1" >> "$HELP_FILE"
 
 
-CONSTELATION=$(sort -t ',' -k 4 "$HELP_FILE" | uniq -c | sort -n | head -n 1 | awk '{print $2}')
+CONSTELATION=$(sort -t ',' -k 4 "$HELP_FILE" |cut -d ',' -f 4 | uniq -c | sort -nr | head -n 1 | awk '{print $2}')
 
 STAR=$(egrep ${CONSTELATION} "$HELP_FILE" | sort -n -t ',' -k 7 | head -n 1|cut -d ',' -f 1 )
 
@@ -28,3 +28,4 @@ echo "$STAR"
 
 rm "$HELP_FILE"
 exit 0
+
