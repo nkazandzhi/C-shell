@@ -18,3 +18,4 @@ time=$(echo "$(date +"%s.%2N") - ${starting_time}" | bc)
 echo "Rann command: ${comm} ${command_counter} times in ${time} seconds"
 average_time=$(echo "scale=2; $time / $command_counter" | bc)
 echo "Average time: $average_time seconds" 
+exit 0
