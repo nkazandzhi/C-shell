@@ -25,3 +25,36 @@ while read file; do
 	mkdir -p "$2"/"$dirname"
 	cp "$1"/"$file" "$2"/"$dirname"
 done < <(echo "$files")
+
+
+#Second solution
+
+target=$(echo "$1" ) #| rev | cut -d '/' -f 2- | rev)
+empty_dir=$(echo "$2") #| rev | cut -d '/' -f 2- | rev)
+
+files=$(find "$target" -type f)
+echo '$files:'
+cat "$files"
+echo ''
+
+for file in $files; do
+		to_add="$file"
+		if echo "$file" | grep -qE "\.swp$"; then
+				regular_file=$(echo "$file" | rev | cut -d "." -f 2- | rev)
+				file_dir=$(echo "$regular_file" | rev | cut -d "/" -f 2- | rev)
+				file_name=$(echo "$regular_file" | rev | cut -d "/" -f 1 | rev | cut -b 2-)
+				if echo "$files" | grep -qE "^${file_dir}/${file_name}$"; then
+						echo "$file is a swap file"
+						continue
+				fi
+		fi
+		target_dir_len=$(( $(echo "$target" | wc -c) ))
+		echo "target dir length: $target_dir_len"
+		file_dir=$(echo "$file" | cut -b ${target_dir_len}- | rev | cut -d "/" -f 2- | rev)
+		echo "file dir: $file_dir"
+		file_name=$(echo "$file" | rev | cut -d "/" -f 1 | rev)
+		echo "file name: $file_name"
+		mkdir -p "${empty_dir}$file_dir"
+		touch "${empty_dir}${file_dir}/${file_name}"
+done
+
