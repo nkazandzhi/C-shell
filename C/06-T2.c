@@ -27,4 +27,5 @@ int main(int argc, char* argv[])
 		}
 	}
   close(fd_file);
+  exit(0);
 }
